@@ -544,6 +544,10 @@ class SimulationGUI {
         let sp = this.getAverageAndStdDevValue(selectedSimulation, "nrOfSuccessfulPackets")[0];
         if (sp) {
             let pl = 100 - 100 * sp / this.getAverageAndStdDevValue(selectedSimulation, "nrOfSentPackets")[0];
+            if (pl < 0)
+            {
+                console.log ("AVG sent=" + this.getAverageAndStdDevValue(selectedSimulation, "nrOfSentPackets")[0] + ", succ=" + sp + ", packetloss=" + pl);
+            }
             selectedSimulation.totalPacketLoss.push(pl);
             $("#simTotalPacketLoss").text(`${pl.toFixed(2)} %`);
         }
