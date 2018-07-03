@@ -40,7 +40,7 @@ class EventManager {
                         parseInt(ev.parts[17]), parseInt(ev.parts[18]), parseInt(ev.parts[19]), parseInt(ev.parts[20]), parseInt(ev.parts[21]), parseInt(ev.parts[22]), parseInt(ev.parts[23]),
                         parseInt(ev.parts[24]), parseInt(ev.parts[25]), parseInt(ev.parts[26]), parseInt(ev.parts[27]), parseFloat(ev.parts[28]), parseFloat(ev.parts[29]),
                         parseInt(ev.parts[30]), parseInt(ev.parts[31]), ev.parts[32], parseInt(ev.parts[33]), parseInt(ev.parts[34]),
-                        parseInt(ev.parts[35]), parseInt(ev.parts[36]), ev.parts[37], parseFloat(ev.parts[38]), parseInt(ev.parts[39]));
+                        parseInt(ev.parts[35]), parseInt(ev.parts[36]), ev.parts[37], parseFloat(ev.parts[38]), parseInt (ev.parts[39]), parseFloat(ev.parts[40]), parseInt(ev.parts[41]));
                     break;
 
                 case 'stanodeadd':
@@ -137,7 +137,7 @@ class EventManager {
         maxTimeOfPacketsInQueue: number, ipCameraMotionPercentage: number, ipCameraMotionDuration: number, ipCameraDataRate: number, nsta: number, cooldownPeriod: number,
         firmwareSize: number, firmwareBlockSize: number, firmwareCorruptionProbability: number, firmwareNewUpdateProbability: number, sensorMeasurementSize: number,
         numberOfRAWGroups: number, RAWSlotFormat: string, RAWSlotCount: number, numberOfRAWSlots: number,
-        contentionPerRAWSlot: number, contentionPerRAWSlotOnlyInFirstGroup: number, trafficString: string, rho: number, numRpsElements?: number) {
+        contentionPerRAWSlot: number, contentionPerRAWSlotOnlyInFirstGroup: number, trafficString: string, rho: number, numLoops: number, loopCycle: number, numRpsElements?: number) {
         let simulation = this.sim.simulationContainer.getSimulation(stream);
         if (typeof simulation == "undefined") {
             simulation = new Simulation();
@@ -197,6 +197,8 @@ class EventManager {
         config.contentionPerRAWSlot = contentionPerRAWSlot;
         config.contentionPerRAWSlotOnlyInFirstGroup = contentionPerRAWSlotOnlyInFirstGroup;
 
+        config.numLoops = numLoops;
+        config.loopCycle = loopCycle;
         config.numRpsElements = numRpsElements;
 
     }

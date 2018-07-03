@@ -147,7 +147,8 @@ class SimulationConfiguration {
     payloadSize: number;
 
     beaconInterval: number;
-
+    numLoops: number;
+    loopCycle: number;
     name: string = "";
 
 
