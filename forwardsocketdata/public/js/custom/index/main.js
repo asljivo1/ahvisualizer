@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var Animation = (function () {
+var Animation = /** @class */ (function () {
     function Animation() {
         this.time = 0;
         this.color = new Color(0, 0, 0, 1, 0);
@@ -18,7 +18,7 @@ var Animation = (function () {
     };
     return Animation;
 }());
-var BroadcastAnimation = (function (_super) {
+var BroadcastAnimation = /** @class */ (function (_super) {
     __extends(BroadcastAnimation, _super);
     function BroadcastAnimation(x, y) {
         var _this = _super.call(this) || this;
@@ -42,7 +42,7 @@ var BroadcastAnimation = (function (_super) {
     };
     return BroadcastAnimation;
 }(Animation));
-var ReceivedAnimation = (function (_super) {
+var ReceivedAnimation = /** @class */ (function (_super) {
     __extends(ReceivedAnimation, _super);
     function ReceivedAnimation(x, y) {
         var _this = _super.call(this) || this;
@@ -67,7 +67,7 @@ var ReceivedAnimation = (function (_super) {
     };
     return ReceivedAnimation;
 }(Animation));
-var AssociatedAnimation = (function (_super) {
+var AssociatedAnimation = /** @class */ (function (_super) {
     __extends(AssociatedAnimation, _super);
     function AssociatedAnimation(x, y) {
         var _this = _super.call(this) || this;
@@ -93,7 +93,7 @@ var AssociatedAnimation = (function (_super) {
     };
     return AssociatedAnimation;
 }(Animation));
-var Charting = (function () {
+var Charting = /** @class */ (function () {
     function Charting(simGUI) {
         this.simGUI = simGUI;
         this.refreshTimerId = -1;
@@ -647,7 +647,7 @@ var Charting = (function () {
     };
     return Charting;
 }());
-var Color = (function () {
+var Color = /** @class */ (function () {
     function Color(red, green, blue, alpha, position) {
         if (alpha === void 0) { alpha = 1; }
         if (position === void 0) { position = 0; }
@@ -662,7 +662,7 @@ var Color = (function () {
     };
     return Color;
 }());
-var Palette = (function () {
+var Palette = /** @class */ (function () {
     function Palette() {
         this.colors = [];
         this.lookup = [];
@@ -714,14 +714,14 @@ var Palette = (function () {
     };
     return Palette;
 }());
-var EventManager = (function () {
+var EventManager = /** @class */ (function () {
     function EventManager(sim) {
         this.sim = sim;
         this.events = [];
     }
     EventManager.prototype.processEvents = function () {
         var eventsProcessed = this.events.length > 0;
-        if (this.events.length > 1000)
+        if (this.events.length > 1000) // don't update the GUI anymore on each event if too many events are pending
             this.updateGUI = false;
         else
             this.updateGUI = true;
@@ -738,7 +738,7 @@ var EventManager = (function () {
                     this.onRawConfig(ev.stream, parseInt(ev.parts[2]), parseInt(ev.parts[3]), parseInt(ev.parts[4]), parseInt(ev.parts[5]), parseInt(ev.parts[6]), parseInt(ev.parts[7]), parseInt(ev.parts[8]), parseInt(ev.parts[9]));
                     break;
                 case 'start':
-                    this.onStart(ev.stream, parseInt(ev.parts[2]), ev.parts[3], parseFloat(ev.parts[4]), parseFloat(ev.parts[5]), parseInt(ev.parts[6]), parseInt(ev.parts[7]), parseInt(ev.parts[8]), ev.parts[9], parseFloat(ev.parts[10]), parseFloat(ev.parts[11]), ev.parts[12], parseInt(ev.parts[13]), parseInt(ev.parts[14]), ev.parts[15], parseInt(ev.parts[16]), parseInt(ev.parts[17]), parseInt(ev.parts[18]), parseInt(ev.parts[19]), parseInt(ev.parts[20]), parseInt(ev.parts[21]), parseInt(ev.parts[22]), parseInt(ev.parts[23]), parseInt(ev.parts[24]), parseInt(ev.parts[25]), parseInt(ev.parts[26]), parseInt(ev.parts[27]), parseFloat(ev.parts[28]), parseFloat(ev.parts[29]), parseInt(ev.parts[30]), parseInt(ev.parts[31]), ev.parts[32], parseInt(ev.parts[33]), parseInt(ev.parts[34]), parseInt(ev.parts[35]), parseInt(ev.parts[36]), ev.parts[37], parseFloat(ev.parts[38]), parseInt(ev.parts[39]));
+                    this.onStart(ev.stream, parseInt(ev.parts[2]), ev.parts[3], parseFloat(ev.parts[4]), parseFloat(ev.parts[5]), parseInt(ev.parts[6]), parseInt(ev.parts[7]), parseInt(ev.parts[8]), ev.parts[9], parseFloat(ev.parts[10]), parseFloat(ev.parts[11]), ev.parts[12], parseInt(ev.parts[13]), parseInt(ev.parts[14]), ev.parts[15], parseInt(ev.parts[16]), parseInt(ev.parts[17]), parseInt(ev.parts[18]), parseInt(ev.parts[19]), parseInt(ev.parts[20]), parseInt(ev.parts[21]), parseInt(ev.parts[22]), parseInt(ev.parts[23]), parseInt(ev.parts[24]), parseInt(ev.parts[25]), parseInt(ev.parts[26]), parseInt(ev.parts[27]), parseFloat(ev.parts[28]), parseFloat(ev.parts[29]), parseInt(ev.parts[30]), parseInt(ev.parts[31]), ev.parts[32], parseInt(ev.parts[33]), parseInt(ev.parts[34]), parseInt(ev.parts[35]), parseInt(ev.parts[36]), ev.parts[37], parseFloat(ev.parts[38]), parseInt(ev.parts[39]), parseFloat(ev.parts[40]), parseInt(ev.parts[41]));
                     break;
                 case 'stanodeadd':
                     this.onNodeAdded(ev.stream, true, parseInt(ev.parts[2]), parseFloat(ev.parts[3]), parseFloat(ev.parts[4]), parseInt(ev.parts[5]));
@@ -786,7 +786,7 @@ var EventManager = (function () {
             var l = _a[_i];
             this.onReceive({ stream: entry.stream, line: l });
         }
-        if (this.events.length > 10000)
+        if (this.events.length > 10000) // prevent epic memory build up
             this.processEvents();
     };
     EventManager.prototype.onReceive = function (entry) {
@@ -797,7 +797,7 @@ var EventManager = (function () {
         var ev = new SimulationEvent(entry.stream, time, parts);
         this.events.push(ev);
     };
-    EventManager.prototype.onStart = function (stream, aidRAWRange, dataMode, dataRate, bandwidth, trafficInterval, trafficPacketsize, beaconInterval, name, propagationLossExponent, propagationLossReferenceLoss, apAlwaysSchedulesForNextSlot, minRTO, simulationTime, trafficType, trafficIntervalDeviation, tcpSegmentSize, tcpInitialSlowStartThreshold, tcpInitialCWnd, maxTimeOfPacketsInQueue, ipCameraMotionPercentage, ipCameraMotionDuration, ipCameraDataRate, nsta, cooldownPeriod, firmwareSize, firmwareBlockSize, firmwareCorruptionProbability, firmwareNewUpdateProbability, sensorMeasurementSize, numberOfRAWGroups, RAWSlotFormat, RAWSlotCount, numberOfRAWSlots, contentionPerRAWSlot, contentionPerRAWSlotOnlyInFirstGroup, trafficString, rho, numRpsElements) {
+    EventManager.prototype.onStart = function (stream, aidRAWRange, dataMode, dataRate, bandwidth, trafficInterval, trafficPacketsize, beaconInterval, name, propagationLossExponent, propagationLossReferenceLoss, apAlwaysSchedulesForNextSlot, minRTO, simulationTime, trafficType, trafficIntervalDeviation, tcpSegmentSize, tcpInitialSlowStartThreshold, tcpInitialCWnd, maxTimeOfPacketsInQueue, ipCameraMotionPercentage, ipCameraMotionDuration, ipCameraDataRate, nsta, cooldownPeriod, firmwareSize, firmwareBlockSize, firmwareCorruptionProbability, firmwareNewUpdateProbability, sensorMeasurementSize, numberOfRAWGroups, RAWSlotFormat, RAWSlotCount, numberOfRAWSlots, contentionPerRAWSlot, contentionPerRAWSlotOnlyInFirstGroup, trafficString, rho, numLoops, loopCycle, numRpsElements) {
         var simulation = this.sim.simulationContainer.getSimulation(stream);
         if (typeof simulation == "undefined") {
             simulation = new Simulation();
@@ -850,6 +850,8 @@ var EventManager = (function () {
         config.sensorMeasurementSize = sensorMeasurementSize;
         config.contentionPerRAWSlot = contentionPerRAWSlot;
         config.contentionPerRAWSlotOnlyInFirstGroup = contentionPerRAWSlotOnlyInFirstGroup;
+        config.numLoops = numLoops;
+        config.loopCycle = loopCycle;
         config.numRpsElements = numRpsElements;
     };
     EventManager.prototype.onSlotStats = function (stream, timestamp, values, isAP) {
@@ -1051,7 +1053,7 @@ var EventManager = (function () {
     };
     return EventManager;
 }());
-var SimulationEvent = (function () {
+var SimulationEvent = /** @class */ (function () {
     function SimulationEvent(stream, time, parts) {
         this.stream = stream;
         this.time = time;
@@ -1062,7 +1064,7 @@ var SimulationEvent = (function () {
 /// <reference path="../../../../typings/globals/jquery/index.d.ts" />
 /// <reference path="../../../../typings/globals/socket.io/index.d.ts" />
 /// <reference path="../../../../typings/globals/highcharts/index.d.ts" />
-var SimulationContainer = (function () {
+var SimulationContainer = /** @class */ (function () {
     function SimulationContainer() {
         this.keys = [];
         this.simulations = {};
@@ -1105,7 +1107,7 @@ function ToolTip(canvas, region, text, width, timeout) {
     div.innerHTML = text;
     // show the tool-tip
     this.show = function (pos) {
-        if (!visible) {
+        if (!visible) { // ignore if already shown (or reset time)
             //me.hideOther();
             visible = true; // lock so it's only shown once
             setDivPos(pos); // set position
@@ -1150,7 +1152,7 @@ function ToolTip(canvas, region, text, width, timeout) {
     canvas.addEventListener("mousemove", check);
     canvas.addEventListener("click", check);
 }
-var SimulationGUI = (function () {
+var SimulationGUI = /** @class */ (function () {
     function SimulationGUI(canvas) {
         this.canvas = canvas;
         this.simulationContainer = new SimulationContainer();
@@ -1252,8 +1254,8 @@ var SimulationGUI = (function () {
             var rectHeight = height / nRps - (nRps + 1) * padding;
             var currentSlotNum = 0;
             ind = 0;
-            for (var i = 0; i < nRps; i++) {
-                for (var j = 0; j < multiGroupWidths[i].length; j++) {
+            for (var i = 0; i < nRps; i++) { // iterate through RPS elements
+                for (var j = 0; j < multiGroupWidths[i].length; j++) { // iterate through RAW groups within RPS elements
                     ctx.beginPath();
                     var xGroupCoord = void 0;
                     if (j != 0)
@@ -1263,7 +1265,7 @@ var SimulationGUI = (function () {
                     ctx.rect(xGroupCoord, i * rectHeight + (i + 1) * (padding + 0.5), multiGroupWidths[i][j], rectHeight);
                     ctx.stroke();
                     var slots = multiGroupWidths[i][j] / multiSlotWidths[i][j]; // number of slots in current group
-                    for (var k = 0; k < slots; k++) {
+                    for (var k = 0; k < slots; k++) { // iterate through slots within RAW groups
                         var sum = selectedSimulation.totalSlotUsageAP[currentSlotNum] + selectedSimulation.totalSlotUsageSTA[currentSlotNum];
                         if (sum > 0) {
                             var percAP = selectedSimulation.totalSlotUsageAP[currentSlotNum] / sum;
@@ -1508,6 +1510,9 @@ var SimulationGUI = (function () {
         var sp = this.getAverageAndStdDevValue(selectedSimulation, "nrOfSuccessfulPackets")[0];
         if (sp) {
             var pl = 100 - 100 * sp / this.getAverageAndStdDevValue(selectedSimulation, "nrOfSentPackets")[0];
+            if (pl < 0) {
+                console.log("AVG sent=" + this.getAverageAndStdDevValue(selectedSimulation, "nrOfSentPackets")[0] + ", succ=" + sp + ", packetloss=" + pl);
+            }
             selectedSimulation.totalPacketLoss.push(pl);
             $("#simTotalPacketLoss").text(pl.toFixed(2) + " %");
         }
@@ -1766,7 +1771,7 @@ $(document).ready(function () {
     var hasConnected = false;
     var sock = io("http://" + window.location.host + "/", opts);
     sock.on("connect", function (data) {
-        if (hasConnected)
+        if (hasConnected) // only connect once
             return;
         hasConnected = true;
         console.log("Websocket connected, listening for events");
@@ -1896,7 +1901,7 @@ $(document).ready(function () {
         window.setTimeout(loop, 25);
     }
 });
-var SimulationNode = (function () {
+var SimulationNode = /** @class */ (function () {
     function SimulationNode() {
         this.id = -1;
         this.x = 0;
@@ -1910,7 +1915,7 @@ var SimulationNode = (function () {
     }
     return SimulationNode;
 }());
-var NodeValue = (function () {
+var NodeValue = /** @class */ (function () {
     function NodeValue() {
         this.totalTransmitTime = 0;
         this.totalReceiveTime = 0;
@@ -1987,7 +1992,7 @@ var NodeValue = (function () {
     }
     return NodeValue;
 }());
-var APNode = (function (_super) {
+var APNode = /** @class */ (function (_super) {
     __extends(APNode, _super);
     function APNode() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -1996,7 +2001,7 @@ var APNode = (function (_super) {
     }
     return APNode;
 }(SimulationNode));
-var STANode = (function (_super) {
+var STANode = /** @class */ (function (_super) {
     __extends(STANode, _super);
     function STANode() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -2006,7 +2011,7 @@ var STANode = (function (_super) {
     }
     return STANode;
 }(SimulationNode));
-var SimulationConfiguration = (function () {
+var SimulationConfiguration = /** @class */ (function () {
     function SimulationConfiguration() {
         this.name = "";
         this.nGroupsPerRps = [];
@@ -2021,7 +2026,7 @@ var SimulationConfiguration = (function () {
     }
     return SimulationConfiguration;
 }());
-var Simulation = (function () {
+var Simulation = /** @class */ (function () {
     function Simulation() {
         this.nodes = [];
         this.slotUsageSTA = [];

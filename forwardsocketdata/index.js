@@ -9,7 +9,7 @@ var readline = require("readline");
 var HTTP_PORT = 8080;
 var LISTENER_PORT = 7707;
 var BIND_ADDRESS = "";
-var SocketManager = (function () {
+var SocketManager = /** @class */ (function () {
     function SocketManager() {
         this.activeSockets = {};
     }
@@ -39,21 +39,21 @@ var SocketManager = (function () {
     };
     return SocketManager;
 }());
-var Entry = (function () {
+var Entry = /** @class */ (function () {
     function Entry(stream, line) {
         this.stream = stream;
         this.line = line;
     }
     return Entry;
 }());
-var Entries = (function () {
+var Entries = /** @class */ (function () {
     function Entries(stream, lines) {
         this.stream = stream;
         this.lines = lines;
     }
     return Entries;
 }());
-var Program = (function () {
+var Program = /** @class */ (function () {
     function Program(args) {
         // a list of active connections from the website
         this.activeSocketManager = new SocketManager();
